@@ -4,9 +4,6 @@
   "adonis-version": "4.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "serve:dev": "nodemon server.js"
-  },
   "keywords": [
     "adonisjs",
     "adonis-app"
@@ -35,7 +32,6 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "nodemon": "^2.0.2",
     "prettier": "^2.0.4"
   },
   "autoload": {
