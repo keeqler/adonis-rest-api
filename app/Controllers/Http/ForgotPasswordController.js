@@ -36,8 +36,7 @@ class ForgotPasswordController {
     const { email, token, password } = request.all()
 
     const updateSuccess = await User.query()
-      .where('email', email)
-      .where('token', token)
+      .where({ email, token })
       .where('token_expiry', '>', Date.now())
       .update({
         password: await Hash.make(password),
