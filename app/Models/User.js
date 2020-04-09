@@ -21,18 +21,16 @@ class User extends Model {
     })
   }
 
-  /**
-   * A relationship on tokens is required for auth to
-   * work. Since features like `refreshTokens` or
-   * `rememberToken` will be saved inside the
-   * tokens table.
-   *
-   * @method tokens
-   *
-   * @return {Object}
-   */
   tokens() {
     return this.hasMany('App/Models/Token')
+  }
+
+  projects() {
+    return this.hasMany('App/Models/Project')
+  }
+
+  tasks() {
+    return this.hasMany('App/Models/Task')
   }
 }
 
