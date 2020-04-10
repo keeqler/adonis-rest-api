@@ -21,12 +21,15 @@ class TaskController {
 
     return await Task.create({
       ...data,
-      project_id: parseInt(params.projects_id)
+      project_id: params.projects_id
     })
   }
 
   async show({ params, response }) {
-    const task = await Task.find(params.id)
+    const task = await Task.findBy({
+      id: params.id,
+      project_id: params.projects_id
+    })
 
     if (!task) return response.status(404).send()
 
@@ -42,13 +45,23 @@ class TaskController {
       'file_id'
     ])
 
-    const updateSuccess = await Task.query().where('id', params.id).update(data)
+    const updateSuccess = await Task.query()
+      .where({
+        id: params.id,
+        project_id: params.projects_id
+      })
+      .update(data)
 
     if (!updateSuccess) response.status(404).send()
   }
 
-  async destroy({ params, request, response }) {
-    const deleteSuccess = await Task.query().where('id', params.id).delete()
+  async destroy({ params, response }) {
+    const deleteSuccess = await Task.query()
+      .where({
+        id: params.id,
+        project_id: params.projects_id
+      })
+      .delete()
 
     if (!deleteSuccess) return response.status(404).send()
   }
