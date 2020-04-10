@@ -16,6 +16,10 @@ class FileController {
 
   async store({ request, response }) {
     const file = request.file('file', { size: '2mb' })
+
+    if (!file)
+      return response.status(400).send({ error: 'You must provide a file' })
+
     const fileName = `${crypto.randomBytes(16).toString('hex')}.${file.subtype}`
 
     await file.move(Helpers.tmpPath('uploads'), { name: fileName })
