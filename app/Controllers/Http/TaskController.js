@@ -3,11 +3,13 @@
 const Task = use('App/Models/Task')
 
 class TaskController {
-  async index({ params }) {
+  async index({ params, request }) {
+    const { page } = request.get()
+
     return await Task.query()
       .where('project_id', params.projects_id)
       .with('user', qb => qb.select('id', 'email'))
-      .fetch()
+      .paginate(page)
   }
 
   async store({ params, request }) {
