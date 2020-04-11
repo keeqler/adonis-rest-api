@@ -4,7 +4,11 @@ class SessionController {
   async store({ request, response, auth }) {
     const { email, password } = request.all()
 
-    return await auth.attempt(email, password)
+    try {
+      return await auth.attempt(email, password)
+    } catch (error) {
+      response.status(401).send()
+    }
   }
 }
 

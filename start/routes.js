@@ -26,6 +26,7 @@ Route.group(() => {
         [['projects.update'], ['Project']]
       ])
     )
+
   Route.resource('projects.tasks', 'TaskController')
     .apiOnly()
     .validator(
@@ -34,5 +35,4 @@ Route.group(() => {
         [['projects.tasks.update'], ['Task']]
       ])
     )
-    .middleware(['auth'])
-})
+}).middleware(['auth'])
