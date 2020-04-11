@@ -1,6 +1,9 @@
 'use strict'
 
 const Task = use('App/Models/Task')
+const User = use('App/Models/User')
+const Project = use('App/Models/Project')
+const File = use('App/Models/File')
 
 class TaskController {
   async index({ params, request }) {
@@ -12,7 +15,8 @@ class TaskController {
       .paginate(page)
   }
 
-  async store({ params, request }) {
+  async store({ params, request, response }) {
+    const { projects_id: project_id } = params
     const data = request.only([
       'user_id',
       'title',
@@ -21,10 +25,22 @@ class TaskController {
       'file_id'
     ])
 
-    return await Task.create({
-      ...data,
-      project_id: params.projects_id
-    })
+    const userExists = await User.find(data.user_id)
+
+    if (!userExists)
+      return response.status(404).send({ error: 'User not found' })
+
+    const projectExists = await Project.find(project_id)
+
+    if (!projectExists)
+      return response.status(404).send({ error: 'Project not found' })
+
+    const fileExists = await File.find(data.file_id)
+
+    if (!fileExists)
+      return response.status(404).send({ error: 'File not found' })
+
+    return await Task.create({ ...data, project_id })
   }
 
   async show({ params, response }) {
