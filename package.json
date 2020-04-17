@@ -24,6 +24,7 @@
     "@adonisjs/redis": "^2.0.7",
     "@adonisjs/validator": "^5.0.6",
     "adonis-kue": "^5.0.1",
+    "raven": "^2.6.4",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
