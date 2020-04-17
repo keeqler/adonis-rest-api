@@ -5,8 +5,11 @@ const User = use('App/Models/User')
 class UserController {
   async store({ request, response }) {
     const data = request.only(['email', 'password'])
+    const addresses = request.input('addresses')
 
-    await User.create(data)
+    const user = await User.create(data)
+
+    await user.addresses().createMany(addresses)
 
     response.status(201).send()
   }
